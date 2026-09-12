@@ -29,3 +29,9 @@ The script ensures idempotent execution, dynamic organizational unit (OU) placem
    GivenName,Surname,Department
    Martin,Valverde,IT
    Jesus,Luis,Sales
+
+
+### 1. Idempotency Check (Duplicate Handling)
+When re-running the script against pre-existing domain users, execution flow is preserved without exceptions:
+<img width="742" height="152" alt="image" src="https://github.com/user-attachments/assets/e032a172-421c-41c8-b638-26c33a808573" />
+
