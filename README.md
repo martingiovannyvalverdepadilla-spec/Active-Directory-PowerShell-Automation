@@ -21,6 +21,7 @@ The script ensures idempotent execution, dynamic organizational unit (OU) placem
 * **Dynamic OU Routing:** Inspects the `Department` attribute through conditional logic (`if / elseif / else`) to route each user object to its designated Organizational Unit (`$TargetOU`).
 * **PowerShell Splatting:** Employs a structured hash table (`@Params`) passed directly to `New-ADUser`, reducing line length and improving code readability and maintenance.
 * **Fault Tolerance & Exception Handling:** Enforces `-ErrorAction Stop` inside a `try / catch` block to convert non-terminating errors into terminating exceptions, surfacing detailed Active Directory policy violations (e.g., password complexity failures) via `$($_.Exception.Message)`.
+---
 
 ## Usage & Execution
 
@@ -29,9 +30,30 @@ The script ensures idempotent execution, dynamic organizational unit (OU) placem
    GivenName,Surname,Department
    Martin,Valverde,IT
    Jesus,Luis,Sales
+2. Open an elevated PowerShell prompt on the Domain Controller and execute:
+   ```powershell
+   C:\Provision-ADUser.ps1
 
+## Verification & Results
 
 ### 1. Idempotency Check (Duplicate Handling)
 When re-running the script against pre-existing domain users, execution flow is preserved without exceptions:
 <img width="742" height="152" alt="image" src="https://github.com/user-attachments/assets/e032a172-421c-41c8-b638-26c33a808573" />
+
+### 2. Initial Bulk Creation Output
+Initial execution displaying green confirmation outputs for users routed to their target OUs:
+
+<img width="1037" height="626" alt="image" src="https://github.com/user-attachments/assets/6450f132-33cb-40e1-86df-80e6f9e947bd" />
+
+### 3. Active Directory Policy Enforcement (Exception Handling)
+Runtime interception of a password complexity violation handled gracefully via `try/catch`:
+<img width="1027" height="757" alt="image" src="https://github.com/user-attachments/assets/9f312017-37ed-4fca-a23d-2dbff83fcc04" />
+
+### 4. Domain Placement Verification
+Validation across both CLI (`Format-Table`) and GUI (Active Directory Users and Computers) confirming proper OU tree placement:
+<img width="1028" height="178" alt="image" src="https://github.com/user-attachments/assets/b0012098-2405-4534-93df-57b5a39b202b" />
+<img width="1055" height="827" alt="image" src="https://github.com/user-attachments/assets/1dbfaafe-e409-42ed-b64d-a3104838fbca" />
+
+
+
 
